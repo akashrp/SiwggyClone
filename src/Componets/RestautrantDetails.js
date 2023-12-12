@@ -1,18 +1,19 @@
 ///import axios from "axios";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState ,useContext} from "react";
 import { useParams } from "react-router-dom";
 import { Restaurant_Menu_API } from "../Uitils/APILinks";
 import OfferCard from "./OfferCard";
 import MenuAccordion from "./MenuAccordion";
 import{BsChevronDown} from "react-icons/bs"
 import Menu from "./Menu";
+import RestaurantContext from "../Uitils/RestaurantContext";
 
 const RestaurantDetails=()=>
 {
     const {RestaurantId} = useParams();
     const [resutarantData,setRestaurantData]=useState([]);
-     
+     const {setResDetails}=useContext(RestaurantContext)
     useEffect(()=>{
       getRestaurantMenuData();
     },[])
@@ -20,12 +21,12 @@ const RestaurantDetails=()=>
     const getRestaurantMenuData = async()=>{
         let result = await axios.get(Restaurant_Menu_API+RestaurantId)
         setRestaurantData(result.data.data.cards); 
-        console.log(resutarantData);
+        setResDetails(result.data.data.cards.find(x=>x.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.Restaurant").card.card.info);
     }
 
     return(
       
-         <div className="flex flex-col text-center w-1/2 m-auto mt-9">
+         <div className="flex flex-col text-center w-4/5 sm:w-1/2 m-auto mt-9">
           {
                 resutarantData.length>0 &&
                 <div className="flex flex-col">
@@ -96,14 +97,15 @@ const RestaurantDetails=()=>
                                     return(
                                     item.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"?
                                     <div key={item.card.card.title} className="w-full border-b-8 border-gray-200 last:border-0">
-                                         <Menu  ItemCategory={item.card.card}></Menu>
+                                         
+                                           <Menu  ItemCategory={item.card.card}></Menu>
                                     </div>
                                      :
                                      <div key={item.card.card.title} className="flex flex-col w-full py-6 border-b-8 border-gray-200  text-gray-700 cursor-pointer text-lg ">
                                          <span className="font-bold text-left">{item.card.card.title}</span>
                                          {
                                           item.card.card.categories.map((item)=>{
-                                             return(                                                
+                                             return(                                                                                  
                                                       <Menu key={item.title} ItemCategory={item}></Menu>
                                              );
                                            })

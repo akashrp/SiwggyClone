@@ -10,7 +10,7 @@ import { OfferIcon } from "../Uitils/APILinks"
             <img className="h-4" src={OfferIcon}></img>
             <span className="text-sm ml-2 text-gray-500 font-bold">{header}</span>
         </div>
-        <div className="flex text-xs w-full truncate text-gray-400" title={`${couponCode} | ${description} `}>
+        <div className="flex text-xs w-full truncate text-gray-400" title={`${couponCode} | ${description}`}>
             <span className="mr-1">{couponCode}</span>|<span className="ml-1">{description}</span>
         </div>
        </div>
