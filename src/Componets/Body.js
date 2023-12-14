@@ -70,7 +70,7 @@ const Body = () => {
     ) {
       updateRes();
     }
-    else if( !isSwiggyNotPresent && !isLoading &&windowHeight + scrollY >= documentHeight)
+    else if( !isSwiggyNotPresent && !isLoading && windowHeight + scrollY+50 >= documentHeight)
     {
       updateRes();
     }
