@@ -36,7 +36,7 @@ const NavBar = () => {
         <span onClick={handleLocationClick} className="underline underline-offset-4 ml-10 hover:text-orange-600 cursor-pointer">
           {location.main_text||'Hinjawadi'}
         </span>
-        <span className="ml-4 hidden md:flex">{location.secondary_text||'Pune'}</span>
+        <span className="ml-4 hidden md:flex">{location.secondary_text||'Pune, Maharashtra, India'}</span>
       </div>
       <ul className="flex w-5/12 justify-between">
         <Link to={"/"} className="hidden md:flex">

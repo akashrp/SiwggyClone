@@ -144,8 +144,8 @@ const Body = () => {
 
   const getRestaurantData = async () => {
     try {
-      let lat= geometry.lat||'18.5642452'
-      let lng= geometry.lng||'73.7768511'
+      let lat= geometry.lat||'18.5912716'
+      let lng= geometry.lng||'73.73890899999999'
       window.removeEventListener("scroll", handleScroll);
       setIsRestaurantDataLoading(true);
       const result = await axios.get(MAIN_PAGE_DATA_API+'lat='+lat+'&lng='+lng+"&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
