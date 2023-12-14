@@ -23,6 +23,7 @@ const Body = () => {
   const [topRestaurantTitle,setTopRestaurantTitle]=useState("");
   const [restaurantTitle,setRestaurantTitle]=useState("");
   const [isRestaurantDataLoading,setIsRestaurantDataLoading]=useState(false);
+  const [isSwiggyNotPresent,setIsSwiggyNotPresent]=useState(false);
   const geometry= useSelector((store)=>store.location.geometry);
   useEffect(() => {
     setRestaurantCount((prevCount)=>0);
@@ -60,14 +61,14 @@ const Body = () => {
       const scrollY = window.scrollY; // Vertical scroll position
       const documentHeight = document.documentElement.scrollHeight; // Total height of the document
     if (
-      !isLoading &&!isRestaurantDataLoading&&
+      !isLoading &&!isRestaurantDataLoading&& !isSwiggyNotPresent&&
       document.documentElement.scrollTop +
         document.documentElement.clientHeight+1 >=
         document.documentElement.scrollHeight
     ) {
       updateRes();
     }
-    else if( !isLoading &&windowHeight + scrollY >= documentHeight)
+    else if( !isSwiggyNotPresent && !isLoading &&windowHeight + scrollY >= documentHeight)
     {
       updateRes();
     }
@@ -148,38 +149,48 @@ const Body = () => {
       window.removeEventListener("scroll", handleScroll);
       setIsRestaurantDataLoading(true);
       const result = await axios.get(MAIN_PAGE_DATA_API+'lat='+lat+'&lng='+lng+"&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
-
-      const tempRestaurantData = result?.data?.data?.cards?.find(
-        (x) => x.card.card.id === "restaurant_grid_listing"
-      )?.card?.card?.gridElements?.infoWithStyle?.restaurants;
-      setRestaurantCount((prevCount) => {
-        return tempRestaurantData.length;
-      });
-      setRestaurantData(tempRestaurantData);
-      const tempBestOffers = result.data.data.cards.find(
-        (x) => x.card.card.id == "topical_banner"
-      )?.card?.card?.imageGridCards?.info;
-      setBestOffers(tempBestOffers);
-
-      const tempDishes = result?.data?.data?.cards?.find(
-        (x) => x.card.card.id === "whats_on_your_mind"
-      )?.card?.card?.gridElements?.infoWithStyle?.info;
-      
-      setDishes(tempDishes)
-      const tempTopRestaurantData = result?.data?.data?.cards?.find(
-        (x) => x.card.card.id === "top_brands_for_you"
-      )?.card?.card?.gridElements?.infoWithStyle?.restaurants;
-      setTopRestaurants(tempTopRestaurantData);
-
-      let tempTitle=result?.data?.data?.cards?.find(
-        (x) => x.card.card.id === "top_brands_for_you"
-      )?.card?.card?.header?.title;
-      setTopRestaurantTitle(tempTitle);
-
-      let tempResTitle=result?.data?.data?.cards?.find(
-        (x) => x.card.card.id === "popular_restaurants_title"
-      )?.card?.card?.title;
-      setRestaurantTitle(tempResTitle)
+      let isSwiggyNotPresent =result?.data?.data.cards?.find(x=>x.card.card.id==="swiggy_not_present");
+      if(!isSwiggyNotPresent)
+      {
+        setIsSwiggyNotPresent(false);  
+        const tempRestaurantData = result?.data?.data?.cards?.find(
+          (x) => x.card.card.id === "restaurant_grid_listing"
+        )?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+        tempRestaurantData &&  setRestaurantCount((prevCount) => {
+          return tempRestaurantData.length;
+        });
+          
+        setRestaurantData(tempRestaurantData);
+        const tempBestOffers = result.data.data.cards.find(
+          (x) => x.card.card.id == "topical_banner"
+        )?.card?.card?.imageGridCards?.info;
+        setBestOffers(tempBestOffers);
+  
+        const tempDishes = result?.data?.data?.cards?.find(
+          (x) => x.card.card.id === "whats_on_your_mind"
+        )?.card?.card?.gridElements?.infoWithStyle?.info;
+        
+        setDishes(tempDishes)
+        const tempTopRestaurantData = result?.data?.data?.cards?.find(
+          (x) => x.card.card.id === "top_brands_for_you"
+        )?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+        setTopRestaurants(tempTopRestaurantData);
+  
+        let tempTitle=result?.data?.data?.cards?.find(
+          (x) => x.card.card.id === "top_brands_for_you"
+        )?.card?.card?.header?.title;
+        setTopRestaurantTitle(tempTitle);
+  
+        let tempResTitle=result?.data?.data?.cards?.find(
+          (x) => x.card.card.id === "popular_restaurants_title"
+        )?.card?.card?.title;
+        setRestaurantTitle(tempResTitle)
+      }
+      else
+      {
+          setIsSwiggyNotPresent(true);
+      }
+    
       setIsRestaurantDataLoading(false)
       window.addEventListener("scroll", handleScroll);
 
@@ -191,6 +202,14 @@ const Body = () => {
     <>
     {
       isRestaurantDataLoading?<FirstLoadShimmer></FirstLoadShimmer>:
+      isSwiggyNotPresent?
+      <div className="flex w-full mt-28 justify-center h">
+          <div className="flex justify-center flex-col items-center w-2/3">
+                <img className=" w-1/4" src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_476,h_476/portal/m/location_unserviceable.png"></img>
+                <span className="font-bold text-xl mt-3">Location Unserviceable</span>
+                <span className="text-sm">We don’t have any services here till now. Try changing location.</span>
+            </div>
+      </div>:
     <div className="flex flex-col items-center">
       {bestOffers && bestOffers.length>0 &&
       <div className="mt-8 w-3/4">
