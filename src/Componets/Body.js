@@ -38,8 +38,10 @@ const Body = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener('touchmove', handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('touchmove', handleScroll);
     };
   }, [restaurantCount]);
   useEffect(() => {
@@ -78,7 +80,7 @@ const Body = () => {
     try {
       setIsLoading(true);
       window.removeEventListener("scroll", handleScroll);
-
+      window.removeEventListener('touchmove', handleScroll);
       const payload = {
         filters: {},
         lat: geometry.lat|| 18.5642452,
@@ -135,7 +137,7 @@ const Body = () => {
         ]);
       setRestaurantCount((prevCount) => prevCount + uniqueRestaurants.length);
       window.addEventListener("scroll", handleScroll);
-
+      window.addEventListener('touchmove', handleScroll);
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -147,6 +149,7 @@ const Body = () => {
       let lat= geometry.lat||'18.5912716'
       let lng= geometry.lng||'73.73890899999999'
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("touchmove", handleScroll);
       setIsRestaurantDataLoading(true);
       const result = await axios.get(MAIN_PAGE_DATA_API+'lat='+lat+'&lng='+lng+"&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
       let isSwiggyNotPresent =result?.data?.data.cards?.find(x=>x.card.card.id==="swiggy_not_present");
@@ -193,7 +196,7 @@ const Body = () => {
     
       setIsRestaurantDataLoading(false)
       window.addEventListener("scroll", handleScroll);
-
+      window.addEventListener("touchmove", handleScroll);
     } catch (error) {
     }
   };
