@@ -66,7 +66,7 @@ const RestaurantDetails=()=>
                      </div>
                     
                     <div className="w-full text-left mt-2 pb-5">
-                        <span className="font-bold text-sm text-gray-700">
+                        <span className="font-bold text-sm text-gray-700 mr-1">
                         {resutarantData.find(x=>x.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.Restaurant").card?.card?.info?.sla?.slaString}
                         </span>
                         <span className="font-bold text-sm text-gray-700 py-4">
