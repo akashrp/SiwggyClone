@@ -243,6 +243,8 @@ const Body = () => {
         {
           isLoading&&
           <>
+            <div className="md:hidden mb-3">Fetching Restaurants....</div>
+          <>
             <RestaurantCardShimmer/>
             <RestaurantCardShimmer/>
             <RestaurantCardShimmer/>
@@ -252,6 +254,7 @@ const Body = () => {
             <RestaurantCardShimmer/>
             <RestaurantCardShimmer/>
             <RestaurantCardShimmer/>
+          </>
           </>
         }
       </div>
