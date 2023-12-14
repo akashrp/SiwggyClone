@@ -33,17 +33,17 @@ const RestaurantDetails=()=>
                     <div className="flex justify-between">
                      <div className="flex flex-col text-left">
                         <span className="font-bold text-lg">
-                            {resutarantData[0].card?.card?.info?.name}
+                            {resutarantData.find(x=>x.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.Restaurant").card?.card?.info?.name}
                         </span>
                         <span className="text-xs pt-2 text-gray-500">
-                            {resutarantData[0].card?.card?.info?.cuisines.join(",")}
+                            {resutarantData.find(x=>x.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.Restaurant").card?.card?.info?.cuisines.join(",")}
                         </span>
                         <span className="text-xs pt-2 text-gray-500">
-                            {resutarantData[0].card?.card?.info?.areaName}
+                            {resutarantData.find(x=>x.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.Restaurant").card?.card?.info?.areaName}
                             {
-                                  resutarantData[0].card?.card?.info?.sla?.lastMileTravelString && +  resutarantData[0].card?.card?.info?.sla?.lastMileTravelString!=""&&
+                                  resutarantData.find(x=>x.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.Restaurant").card?.card?.info?.sla?.lastMileTravelString && +  resutarantData.find(x=>x.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.Restaurant").card?.card?.info?.sla?.lastMileTravelString!=""&&
                                   <span>
-                                   { ", "}  {resutarantData[0].card?.card?.info?.sla?.lastMileTravelString}
+                                   { ", "}  {resutarantData.find(x=>x.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.Restaurant").card?.card?.info?.sla?.lastMileTravelString}
                                   </span>
                             }
 
@@ -51,26 +51,26 @@ const RestaurantDetails=()=>
                      </div>
                     <div className="flex flex-col border py-3 px-2 rounded-md">
                         <span className="text-sm border-b border-gray-300 pb-2 text-green-700 font-bold">
-                        {resutarantData[0].card?.card?.info?.avgRatingString}
+                        {resutarantData.find(x=>x.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.Restaurant").card?.card?.info?.avgRatingString}
                         </span>
                         <span className="text-xs pt-2 font-bold text-gray-500">
-                        {resutarantData[0].card?.card?.info?.totalRatingsString}
+                        {resutarantData.find(x=>x.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.Restaurant").card?.card?.info?.totalRatingsString}
                         </span>
                     </div>                    
                     </div>
                   
                     <div className="w-full text-left mt-2 border-dashed border-b border-gray-300 pb-3">
-                    {resutarantData[0].card?.card?.info?.expectationNotifiers && resutarantData[0].card?.card?.info?.expectationNotifiers.length>0&&
-                     <span className="text-sm pt-2 text-gray-500">{resutarantData[0].card?.card?.info?.expectationNotifiers[0]?.text}</span>
+                    {resutarantData.find(x=>x.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.Restaurant").card?.card?.info?.expectationNotifiers && resutarantData.find(x=>x.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.Restaurant").card?.card?.info?.expectationNotifiers.length>0&&
+                     <span className="text-sm pt-2 text-gray-500">{resutarantData.find(x=>x.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.Restaurant").card?.card?.info?.expectationNotifiers[0]?.text}</span>
                     }
                      </div>
                     
                     <div className="w-full text-left mt-2 pb-5">
                         <span className="font-bold text-sm text-gray-700">
-                        {resutarantData[0].card?.card?.info?.sla?.slaString}
+                        {resutarantData.find(x=>x.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.Restaurant").card?.card?.info?.sla?.slaString}
                         </span>
-                        <span className="font-bold text-sm text-gray-700 ml-5 py-4">
-                        {resutarantData[0].card?.card?.info?.costForTwoMessage}
+                        <span className="font-bold text-sm text-gray-700 py-4">
+                        {resutarantData.find(x=>x.card.card["@type"]=="type.googleapis.com/swiggy.presentation.food.v2.Restaurant").card?.card?.info?.costForTwoMessage}
                         </span>
                     </div>
                     {
